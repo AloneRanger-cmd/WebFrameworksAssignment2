@@ -1,0 +1,96 @@
+/*General CSS for Assigment 1*/
+body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
+    Helvetica, Arial, "Lucida Grande", sans-serif;
+    margin: 0%;
+    min-height: 100dvh;
+    background-color: #fafcfe;
+
+}
+/*Header area with image*/
+header {
+    display: flex;
+    padding-left : 2rem;
+    padding-right : 2rem;
+    padding-top : 1rem;
+    padding-bottom : 1rem;
+    background-color: #0e1527;
+    color: #e7edf3;
+    font-style: italic;
+    text-wrap: nowrap;
+    justify-content: space-between;
+    img {
+        width: 6rem;
+        height: auto;
+        border-radius: 0.2rem;
+        margin-left: auto;
+        border: #0D0A0B 2px solid;
+    }
+    a {
+        text-align: center;
+        text-decoration: none;
+        color: #e7edf3;
+    }
+}
+/*Navigation Area*/
+nav {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1rem;
+    border-bottom: #e7edf3 2px solid;
+    border-top: #e7edf3 2px solid;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #006E8A;
+    }
+    li {
+        display: inline-block;
+        margin-right: 1rem;
+    }
+}
+/*main area general*/
+main {
+    padding : 2rem;
+    border-bottom: #0D0A0B 2px solid;
+    background-color: #fafcfe;
+    align-items: center;
+}
+/*Footer area with griffith logo and student name/number*/
+footer {
+    text-align: center;
+    background-color: #0e1527;
+    color: #e7edf3;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    a {
+        color: #e7edf3;
+    }
+    div.extraInfo{
+        font-size: 0.7rem;
+    }
+}
+/*Griffith Colloge Logo*/
+div.gclink {
+    img {
+        width: 16rem;
+        height: auto;
+    }
+}
+
+/*general pictures*/
+div.picture {
+    img {
+        width: 10rem;
+        height: auto;
+        border: #454955 2px solid;
+        margin-right: 2rem;
+    }
+}

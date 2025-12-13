@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/baseLayout.astro";
+const { frontmatter } = Astro.props;
+---
+<link rel="stylesheet" href="../../styles/tour.css">
+<BaseLayout title="Tour Page">
+    <p>Explore my latest blog posts:</p>
+    <div class="postsList">
+        <div class="postItem1">
+        <a href="/post-1">Album Cyberpunk EP</a></div>
+        <div class="postItem2">
+        <a href="/post-2">My Favourite Song FCKD</a></div>
+        <div class="postItem3">
+        <a href="/post-3">Pray For My Enemies</a></div>
+    </div>
+</BaseLayout>

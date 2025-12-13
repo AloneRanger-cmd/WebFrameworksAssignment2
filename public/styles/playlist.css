@@ -1,0 +1,15 @@
+/*CSS File For the Playlist Page*/
+#musicContainer{    
+    margin: 2rem;
+    padding: 2rem;
+    border: #0D0A0B 2px solid;
+    border-radius: 0.2rem;
+    background-color: #e7edf3;
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+    div.input{
+        display: flex;
+        flex-direction: column;
+    }
+}
