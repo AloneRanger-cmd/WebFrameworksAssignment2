@@ -8,7 +8,10 @@ import BaseLayout from "../layouts/baseLayout.astro";
     Our latest posts in the tour page.<br>
     Finally In the playsit page you can add new music to the list and shuffle them.</p>
 
-<script type="module" src="/scripts/archive.js"></script>
+
+<script type="module" is:inline>
+  import "../../scripts/archive.js";
+</script>
     <div id="archive"></div>
     
 </BaseLayout>

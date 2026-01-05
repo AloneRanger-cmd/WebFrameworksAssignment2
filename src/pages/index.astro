@@ -10,8 +10,13 @@ import BaseLayout from "../layouts/baseLayout.astro";
 
 
 
-<script type="module" src="/scripts/dashboardAuth.js"></script>
-<script type="module" src="/scripts/posts.js"></script>
+
+<script type="module" is:inline>
+  import "../../scripts/dashboardAuth.js";
+</script>
+<script type="module" is:inline>
+  import "../../scripts/posts.js";
+</script>
 
 <div id="posts"></div>
 
