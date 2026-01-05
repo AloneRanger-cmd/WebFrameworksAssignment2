@@ -37,7 +37,9 @@ try {
 const email = session.data.user?.email;
 ---
 <Layout title="dashboard">
-  <script type="module" src="../../scripts/dashboardAuth.js"></script>
+  <script type="module">
+        import "../scripts/dashboardAuth.js";
+    </script>
 
   <link rel="stylesheet" href="../../styles/spost.css">
   <h1>Welcome {email}</h1>

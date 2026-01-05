@@ -3,7 +3,9 @@ import BaseLayout from "../layouts/baseLayout.astro";
 ---
 
 <BaseLayout title="Home Page">
-    <script type="module" src="../../scripts/dashboardAuth.js"></script>
+    <script type="module">
+        import "../scripts/dashboardAuth.js";
+    </script>
     <p>Welcome To my site You can find One of the Artist I chose in the About page.<br>
     Our latest posts in the tour page.<br>
     Finally In the playsit page you can add new music to the list and shuffle them.</p>
