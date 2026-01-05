@@ -1,5 +1,6 @@
-// JS File to fetch and render posts and comments//
-import { supabase } from "../lib/supabaseClient"
+// JS file to fetch and render posts and comments//
+import { supabase } from "./supabaseClient.js";
+
 
 
 
@@ -8,7 +9,6 @@ const { data: posts, error: postsError } = await supabase
     .from("posts")
     .select("id, title, content, author, date, time")
     .order("created_at", { ascending: false })
-    .limit(5)
 
 // Fetch comments//
 const { data: comments, error: commentsError } = await supabase
@@ -19,8 +19,8 @@ const { data: comments, error: commentsError } = await supabase
 if (postsError) console.error(postsError)
 if (commentsError) console.error(commentsError)
 
-// Render posts with comments and ability to add comments//
-const postsContainer = document.getElementById("posts")
+// Render posts//
+const postsContainer = document.getElementById("archive")
 
 if (postsContainer && posts) {
     posts.forEach((post, index) => {
@@ -35,15 +35,8 @@ if (postsContainer && posts) {
 
             <p>By ${post.author} on ${post.date} at ${post.time}</p>
 
-            <!-- COMMENTS -->
+            <!-- COMMENTS GO HERE -->
             <div class="comments" id="comments-for-${post.id}"></div>
-
-            <!-- ADD COMMENT -->
-            <form method="POST" action="/api/comments/comments">
-            <input type="hidden" name="post_id" value="${post.id}" />
-            <textarea name="content" required></textarea>
-            <button type="submit">Post comment</button>
-            </form>
         </div>
         `
     )
