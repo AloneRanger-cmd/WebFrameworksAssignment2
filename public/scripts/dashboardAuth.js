@@ -1,6 +1,6 @@
 // dashboardAuth.js to hydrate Supabase session from cookies So each user can access their own posts in the dashboard//
 
-import { supabase } from "../../src/lib/supabaseClient.js"
+import { supabase } from "../lib/supabaseClient.js"
 
 
 
