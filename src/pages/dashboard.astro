@@ -61,7 +61,9 @@ const email = session.data.user?.email;
 
   <button type="submit">Publish</button>
 </form>
-<script is:inline type="module" src="../../scripts/sposts.js" defer></script>
+<script type="module">
+  import "../scripts/sposts.js";
+</script>
 <div id="sposts"></div>
 
 
