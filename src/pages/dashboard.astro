@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/baseLayout.astro";
+import "../scripts/sposts.js";
 import { supabase } from "../lib/supabase";
 export const prerender = false;
 const accessToken = Astro.cookies.get("sb-access-token");
@@ -63,9 +64,7 @@ const email = session.data.user?.email;
 
   <button type="submit">Publish</button>
 </form>
-<script type="module">
-  import "../scripts/sposts.js";
-</script>
+
 <div id="sposts"></div>
 
 
