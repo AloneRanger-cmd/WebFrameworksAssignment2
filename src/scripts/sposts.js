@@ -1,6 +1,6 @@
 // JS File to fetch and render user's posts with comments, edit and delete options//
 
-import { supabase } from "../lib/supabaseClient.ts"
+import { supabase } from "../lib/supabaseClient"
 
 
 
