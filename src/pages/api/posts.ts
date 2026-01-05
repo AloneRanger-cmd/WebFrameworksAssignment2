@@ -1,0 +1,71 @@
+// src/pages/api/posts.ts
+import type { APIRoute } from 'astro'
+import { createServerClient } from '@supabase/ssr'
+export const prerender = false;
+
+export const POST: APIRoute = async ({ request, redirect }) => {
+  const accessToken = getAccessTokenFromCookie(request)
+
+  if (!accessToken) {
+    return new Response('Unauthorized (no token)', { status: 401 })
+  }
+
+  const supabase = createServerClient(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
+    {
+      global: {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+      cookies: {
+        getAll() {
+          return []
+        },
+        setAll() {},
+      },
+    }
+  )
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser(accessToken)
+
+  if (!user) {
+    return new Response('Unauthorized (invalid user)', { status: 401 })
+  }
+
+  console.log('auth uid:', user.id)
+
+  const formData = await request.formData()
+  const title = formData.get('title')?.toString()
+  const content = formData.get('content')?.toString()
+
+  if (!title || !content) {
+    return new Response('Missing fields', { status: 400 })
+  }
+
+  const { error } = await supabase.from('posts').insert({
+    title,
+    content,
+    slug: title.toLowerCase().replace(/\s+/g, '-'),
+    user_id: user.id,
+  })
+
+  if (error) {
+    return new Response(error.message, { status: 500 })
+  }
+  return redirect("/dashboard");
+  return new Response(JSON.stringify({ success: true }), { status: 201 })
+  
+}
+
+function getAccessTokenFromCookie(request: Request) {
+  const cookie = request.headers.get('cookie')
+  if (!cookie) return null
+  const match = cookie.match(/sb-access-token=([^;]+)/)
+  return match ? match[1] : null
+  
+}
+

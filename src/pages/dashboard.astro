@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/baseLayout.astro";
 import { supabase } from "../lib/supabase";
-
+export const prerender = false;
 const accessToken = Astro.cookies.get("sb-access-token");
 const refreshToken = Astro.cookies.get("sb-refresh-token");
 
@@ -42,4 +42,22 @@ const email = session.data.user?.email;
   <form action="/api/auth/signout">
     <button type="submit">Sign out</button>
   </form>
+  <form method="POST" action="/api/posts">
+  <input
+    type="text"
+    name="title"
+    placeholder="Title"
+    required
+  />
+
+  <textarea
+    name="content"
+    placeholder="Write your post..."
+    required
+  ></textarea>
+
+  <button type="submit">Publish</button>
+</form>
+<script is:inline type="module" src="../../scripts/sposts.js" defer></script>
+<ul id="newList"></ul>
 </Layout>
