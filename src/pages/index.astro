@@ -1,7 +1,5 @@
 ---
 import BaseLayout from "../layouts/baseLayout.astro";
-import "../scripts/posts.js";
-import "../scripts/dashboardAuth.js";
 ---
 
 <BaseLayout title="Home Page">
@@ -12,7 +10,11 @@ import "../scripts/dashboardAuth.js";
 
 
 
-    <div id="posts"></div>
+<script type="module" src="/src/scripts/dashboardAuth.js"></script>
+<script type="module" src="/src/scripts/posts.js"></script>
+
+<div id="posts"></div>
+
 
     
 </BaseLayout>
