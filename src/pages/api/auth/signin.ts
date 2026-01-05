@@ -8,8 +8,9 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
 
+  
   if (!email || !password) {
-    return new Response("Email and password are required", { status: 400 });
+    return redirect("/signin?error=Missing+credentials")
   }
 
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -17,8 +18,9 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     password,
   });
 
-  if (error) {
-    return new Response(error.message, { status: 500 });
+  
+   if (error) {
+    return redirect(`/signin?error=${encodeURIComponent(error.message)}`)
   }
 
   const { access_token, refresh_token } = data.session;

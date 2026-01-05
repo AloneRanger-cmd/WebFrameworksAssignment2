@@ -33,8 +33,10 @@ if (postsContainer && posts) {
 
             <p>By ${post.author} on ${post.date} at ${post.time}</p>
 
+            <!-- COMMENTS -->
             <div class="comments" id="comments-for-${post.id}"></div>
 
+            <!-- ADD COMMENT -->
             <form method="POST" action="/api/comments/comments">
             <input type="hidden" name="post_id" value="${post.id}" />
             <textarea name="content" required></textarea>

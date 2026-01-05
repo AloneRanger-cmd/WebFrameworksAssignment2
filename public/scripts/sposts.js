@@ -1,55 +1,87 @@
-// JS File for dashboard page containing user's posts//
+// JS File to fetch and render user's posts with comments, edit and delete options//
 
 import { supabase } from "../src/lib/supabase.ts"
 
-// Get current user//
-const { data: { user } } = await supabase.auth.getUser()
-async function loadMyPosts() {
-	if (!user) {
-		console.warn("No user logged in")
-		return
-  	}
+// Get current user
+const {data: { user },} = await supabase.auth.getUser()
 
-// Fetch only this user's posts//
-const { data, error } = await supabase
-    .from("posts")
-    .select("title,content,author,id,date,time")
-    .eq("user_id", user.id)
+// Function to load user's posts//
+async function loadMyPosts() {
+  	
+	// Fetch user's posts//
+	const { data: posts, error } = await supabase
+		.from("posts")
+		.select("id,title,content,author,date,time")
+		.eq("user_id", user.id)
 
 	if (error) {
-    	console.error("Error fetching data:", error)
-    	return
+		console.error("Post fetch error:", error)
+		return
 	}
 
-// Render posts with edit and delete options//
-	const container = document.getElementById("sposts")
+	// Fetch comments for those posts//
+	const { data: comments, error: commentsError } = await supabase
+		.from("comments")
+		.select("content, post_id, author")
+		.order("created_at", { ascending: true })
 
-	if (!container) return
+		if (commentsError) {
+			console.error("Comments fetch error:", commentsError)
+		}
 
-	data.forEach(row => {
-    const markup = `
-      	<div class="post">
-        	<h3 class="postTitle">${row.title}</h3>
-        	<p class="postContent">${row.content}</p>
-			<p class="postDate-Time">${row.date} at ${row.time}</p>
+		const container = document.getElementById("sposts")
+		if (!container) return
 
-			<form method="POST" action="/api/posts/delete">
-  				<input type="hidden" name="post_id" value="${row.id}" />
-  				<button type="submit">Delete post</button>
-			</form>
-			
-			<form method="POST" action="/api/posts/edit">
-  				<input type="hidden" name="post_id" value="${row.id}" />
+		container.innerHTML = ""
 
-  				<input type="text" name="title" value="${row.title}" required />
+	// Render posts
+	posts.forEach((row) => {
+		const markup = `
+			<div class="post">
+				<h3 class="postTitle">${row.title}</h3>
+				<p class="postContent">${row.content}</p>
+				<p class="postDate-Time">${row.date} at ${row.time}</p>
 
-  				<textarea name="content" required>${row.content}</textarea>
+				<!-- COMMENTS -->
+				<div class="comments" id="comments-for-${row.id}"></div>
 
-  				<button type="submit">Save changes</button>
-			</form>
-      	</div>`
-		
-    container.insertAdjacentHTML("beforeend", markup)
-	})
+				<!-- DELETE -->
+				<form method="POST" action="/api/posts/delete">
+					<input type="hidden" name="post_id" value="${row.id}" />
+					<button type="submit">Delete post</button>
+				</form>
+
+				<!-- EDIT -->
+				<form method="POST" action="/api/posts/edit">
+					<input type="hidden" name="post_id" value="${row.id}" />
+					<input type="text" name="title" value="${row.title}" required />
+					<textarea name="content" required>${row.content}</textarea>
+					<button type="submit">Save changes</button>
+				</form>
+		</div>`
+
+		container.insertAdjacentHTML("beforeend", markup)
+		})
+
+	// Render comments under correct posts//
+	if (comments) {
+		comments.forEach((comment) => {
+		const commentsContainer = document.getElementById(
+			`comments-for-${comment.post_id}`
+		)
+
+		if (!commentsContainer) return
+
+		commentsContainer.insertAdjacentHTML(
+			"beforeend",
+			`
+			<div class="comment">
+				<p>${comment.content}</p>
+				<p class="commentAuthor">By ${comment.author}</p>
+			</div>`
+		)
+		})
+	}
 }
+
 loadMyPosts()
