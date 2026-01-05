@@ -6,12 +6,18 @@ const { title } = Astro.props;
 ---
 <html>
     <link rel="stylesheet" href="../../styles/general.css">
+    <script>
+                // Pass Supabase env vars to client-side//
+                window.PUBLIC_SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL;
+                window.PUBLIC_SUPABASE_ANON_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+</script>
     <head>
         <Header title={title}/>
         <meta lang="en">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{title}</title>
+        
     </head>
     <body>
         <Navigation />
