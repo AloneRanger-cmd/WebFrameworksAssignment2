@@ -1,6 +1,7 @@
 // JS File to fetch and render user's posts with comments, edit and delete options//
 
-import { supabase } from "../src/lib/supabase.ts"
+import { supabase } from "../lib/supabaseClient"
+
 
 // Get current user
 const {data: { user },} = await supabase.auth.getUser()

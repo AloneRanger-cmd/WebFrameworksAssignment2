@@ -1,5 +1,6 @@
 // JS File to fetch and render posts and comments//
-import { supabase } from "../src/lib/supabase.ts"
+import { supabase } from "../lib/supabaseClient"
+
 
 // Fetch posts//
 const { data: posts, error: postsError } = await supabase
