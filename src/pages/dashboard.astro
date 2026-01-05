@@ -45,7 +45,7 @@ const email = session.data.user?.email;
   <form action="/api/auth/signout">
     <button type="submit">Sign out</button>
   </form>
-  <form method="POST" action="/api/posts">
+  <form method="POST" action="../api/posts/posts" class="spost-form">
   <input
     type="text"
     name="title"
@@ -63,5 +63,16 @@ const email = session.data.user?.email;
 </form>
 <script is:inline type="module" src="../../scripts/sposts.js" defer></script>
 <div id="sposts"></div>
+
+
+<form
+  method="POST"
+  action="/api/account/delete"
+  onsubmit="return confirm('This will permanently delete your account. Are you sure?')"
+>
+  <button type="submit" style="color:red">
+    Delete my account
+  </button>
+</form>
 
 </Layout>

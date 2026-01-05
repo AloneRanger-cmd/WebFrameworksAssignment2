@@ -1,35 +1,68 @@
-//JS File for archive page containing every post//
-
+// JS file to fetch and render posts and comments//
 import { supabase } from "../src/lib/supabase.ts"
 
-// Fetch latest 5 posts
-const { data, error } = await supabase
-  .from("posts")
-  .select("title,content,author,date,time")
-  .order("created_at", { ascending: false })
+// Fetch posts//
+const { data: posts, error: postsError } = await supabase
+    .from("posts")
+    .select("id, title, content, author, date, time")
+    .order("created_at", { ascending: false })
 
-if (error) {
-  console.error("Error fetching data:", error)
+// Fetch comments//
+const { data: comments, error: commentsError } = await supabase
+    .from("comments")
+    .select("content, post_id,author")
+    .order("created_at", { ascending: true })
+
+if (postsError) console.error(postsError)
+if (commentsError) console.error(commentsError)
+
+// Render posts//
+const postsContainer = document.getElementById("archive")
+
+if (postsContainer && posts) {
+    posts.forEach((post, index) => {
+        postsContainer.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="post" data-post-id="${post.id}">
+            <h3>${post.title}</h3>
+
+            <button onclick="togglePost(${index})">Expand</button>
+            <p id="postContent-${index}" style="display:none">${post.content}</p>
+
+            <p>By ${post.author} on ${post.date} at ${post.time}</p>
+
+            <!-- COMMENTS GO HERE -->
+            <div class="comments" id="comments-for-${post.id}"></div>
+        </div>
+        `
+    )
+  })
 }
 
-// Render posts
-const container = document.getElementById("archive")
+// Render comments under their referenced posts//
+if (comments) {
+    comments.forEach((comment) => {
+        const container = document.getElementById(
+        `comments-for-${comment.post_id}`
+        )
 
-if (container && data) {
-  data.forEach((row, index) => {
-    const markup = `
-        <div class="post">
-            <h3 class="postTitle">${row.title}</h3>
-            <button onclick="hideText(${index})">Expand For content</button>
-            <p id="postContent-${index}" style="display:none">${row.content}</p>
-            <p class="postAuthor-date">By ${row.author} on ${row.date} at ${row.time}</p>
-        </div>`
-    container.insertAdjacentHTML("beforeend", markup)
+        if (!container) return
+
+        container.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="comment">
+            <p>${comment.content}</p>
+            <p class="commentAuthor">By ${comment.author}</p>
+        </div>
+        `
+        )
     })
 }
 
-// MUST be global for inline onclick
-window.hideText = function (index) {
+// Text expand Toggle function//
+window.togglePost = function (index) {
     const el = document.getElementById(`postContent-${index}`)
     if (!el) return
     el.style.display = el.style.display === "none" ? "block" : "none"

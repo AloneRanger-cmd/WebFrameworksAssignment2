@@ -1,4 +1,4 @@
-// JS file to fetch and render posts and comments//
+// JS File to fetch and render posts and comments//
 import { supabase } from "../src/lib/supabase.ts"
 
 // Fetch posts//
@@ -17,7 +17,7 @@ const { data: comments, error: commentsError } = await supabase
 if (postsError) console.error(postsError)
 if (commentsError) console.error(commentsError)
 
-// Render posts//
+// Render posts with comments and ability to add comments//
 const postsContainer = document.getElementById("posts")
 
 if (postsContainer && posts) {
@@ -33,10 +33,9 @@ if (postsContainer && posts) {
 
             <p>By ${post.author} on ${post.date} at ${post.time}</p>
 
-            <!-- COMMENTS GO HERE -->
             <div class="comments" id="comments-for-${post.id}"></div>
 
-            <form method="POST" action="/api/comments">
+            <form method="POST" action="/api/comments/comments">
             <input type="hidden" name="post_id" value="${post.id}" />
             <textarea name="content" required></textarea>
             <button type="submit">Post comment</button>

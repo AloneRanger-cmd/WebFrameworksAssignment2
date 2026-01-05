@@ -1,4 +1,4 @@
-// src/pages/api/posts.ts
+// Endpoint for creating a new post//
 import type { APIRoute } from 'astro'
 import { createServerClient } from '@supabase/ssr'
 export const prerender = false;
@@ -39,27 +39,24 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   console.log('auth uid:', user.id)
 
   const formData = await request.formData()
+  const title = formData.get('title')?.toString()
+  const content = formData.get('content')?.toString()
 
-const content = formData.get('content')?.toString()
-const post_id = formData.get('post_id')?.toString()
+  if (!title || !content) {
+    return new Response('Missing fields', { status: 400 })
+  }
 
-if (!content || !post_id) {
-  return new Response("Missing fields", { status: 400 })
-}
-
-
-const { error } = await supabase.from('comments').insert({
-  content,
-  post_id: Number(post_id),
-  user_id: user.id,
-  author: user.email,
-})
-
+  const { error } = await supabase.from('posts').insert({
+    title,
+    content,
+    user_id: user.id,
+    author: user.email,
+  })
 
   if (error) {
     return new Response(error.message, { status: 500 })
   }
-  return redirect("/");
+  return redirect("/dashboard");
 }
 
 function getAccessTokenFromCookie(request: Request) {
