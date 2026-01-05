@@ -37,6 +37,9 @@ try {
 const email = session.data.user?.email;
 ---
 <Layout title="dashboard">
+  <script type="module" src="../../scripts/dashboardAuth.js"></script>
+
+  <link rel="stylesheet" href="../../styles/spost.css">
   <h1>Welcome {email}</h1>
   <p>We are happy to see you here</p>
   <form action="/api/auth/signout">
@@ -59,5 +62,6 @@ const email = session.data.user?.email;
   <button type="submit">Publish</button>
 </form>
 <script is:inline type="module" src="../../scripts/sposts.js" defer></script>
-<ul id="newList"></ul>
+<div id="sposts"></div>
+
 </Layout>
