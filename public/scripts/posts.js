@@ -1,5 +1,6 @@
 // JS File to fetch and render posts and comments//
-import { supabase } from "../lib/supabaseClient"
+import { supabase } from "/supabaseClient.js"
+
 
 
 // Fetch posts//
