@@ -1,90 +1,70 @@
-// JS File to fetch and render user's posts with comments, edit and delete options//
-
-import { supabase } from '../../src/lib/supabase'
-
-
-
-
-// Get current user
-const {data: { user },} = await supabase.auth.getUser()
-
-// Function to load user's posts//
 async function loadMyPosts() {
-  	
-	// Fetch user's posts//
-	const { data: posts, error } = await supabase
-		.from("posts")
-		.select("id,title,content,author,date,time")
-		.eq("user_id", user.id)
+  try {
+    const res = await fetch('/api/sposts')
 
-	if (error) {
-		console.error("Post fetch error:", error)
-		return
-	}
+    if (!res.ok) {
+      console.warn('Not authenticated or failed to load posts')
+      return
+    }
 
-	// Fetch comments for those posts//
-	const { data: comments, error: commentsError } = await supabase
-		.from("comments")
-		.select("content, post_id, author")
-		.order("created_at", { ascending: true })
+    const { posts, comments } = await res.json()
 
-		if (commentsError) {
-			console.error("Comments fetch error:", commentsError)
-		}
+    const container = document.getElementById('sposts')
+    if (!container) return
 
-		const container = document.getElementById("sposts")
-		if (!container) return
+    container.innerHTML = ''
 
-		container.innerHTML = ""
+    // Render posts
+    posts.forEach((row) => {
+      container.insertAdjacentHTML(
+        'beforeend',
+        `
+        <div class="post">
+          <h3 class="postTitle">${row.title}</h3>
+          <p class="postContent">${row.content}</p>
+          <p class="postDate-Time">${row.date} at ${row.time}</p>
 
-	// Render posts
-	posts.forEach((row) => {
-		const markup = `
-			<div class="post">
-				<h3 class="postTitle">${row.title}</h3>
-				<p class="postContent">${row.content}</p>
-				<p class="postDate-Time">${row.date} at ${row.time}</p>
+          <div class="comments" id="comments-for-${row.id}"></div>
 
-				<!-- COMMENTS -->
-				<div class="comments" id="comments-for-${row.id}"></div>
+          <!-- DELETE -->
+          <form method="POST" action="/api/posts/delete">
+            <input type="hidden" name="post_id" value="${row.id}" />
+            <button type="submit">Delete post</button>
+          </form>
 
-				<!-- DELETE -->
-				<form method="POST" action="/api/posts/delete">
-					<input type="hidden" name="post_id" value="${row.id}" />
-					<button type="submit">Delete post</button>
-				</form>
+          <!-- EDIT -->
+          <form method="POST" action="/api/posts/edit">
+            <input type="hidden" name="post_id" value="${row.id}" />
+            <input type="text" name="title" value="${row.title}" required />
+            <textarea name="content" required>${row.content}</textarea>
+            <button type="submit">Save changes</button>
+          </form>
+        </div>
+        `
+      )
+    })
 
-				<!-- EDIT -->
-				<form method="POST" action="/api/posts/edit">
-					<input type="hidden" name="post_id" value="${row.id}" />
-					<input type="text" name="title" value="${row.title}" required />
-					<textarea name="content" required>${row.content}</textarea>
-					<button type="submit">Save changes</button>
-				</form>
-		</div>`
+    // Render comments
+    comments.forEach((comment) => {
+      const commentsContainer = document.getElementById(
+        `comments-for-${comment.post_id}`
+      )
 
-		container.insertAdjacentHTML("beforeend", markup)
-		})
+      if (!commentsContainer) return
 
-	// Render comments under correct posts//
-	if (comments) {
-		comments.forEach((comment) => {
-		const commentsContainer = document.getElementById(
-			`comments-for-${comment.post_id}`
-		)
-
-		if (!commentsContainer) return
-
-		commentsContainer.insertAdjacentHTML(
-			"beforeend",
-			`
-			<div class="comment">
-				<p>${comment.content}</p>
-				<p class="commentAuthor">By ${comment.author}</p>
-			</div>`
-		)
-		})
-	}
+      commentsContainer.insertAdjacentHTML(
+        'beforeend',
+        `
+        <div class="comment">
+          <p>${comment.content}</p>
+          <p class="commentAuthor">By ${comment.author}</p>
+        </div>
+        `
+      )
+    })
+  } catch (err) {
+    console.error('Failed to load dashboard posts', err)
+  }
 }
 
-loadMyPosts()
+document.addEventListener('DOMContentLoaded', loadMyPosts)

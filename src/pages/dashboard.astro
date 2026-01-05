@@ -37,7 +37,8 @@ try {
 const email = session.data.user?.email;
 ---
 <Layout title="dashboard">
-<script type="module" src="../scripts/dashboardAuth.js"></script>
+<script type="module" src="/scripts/dashboardAuth.js"></script>
+
 
 
   <link rel="stylesheet" href="../../styles/spost.css">
@@ -46,7 +47,7 @@ const email = session.data.user?.email;
   <form action="/api/auth/signout">
     <button type="submit">Sign out</button>
   </form>
-  <form method="POST" action="../api/posts/posts" class="spost-form">
+  <form method="POST" action="../api/posts/push" class="spost-form">
   <input
     type="text"
     name="title"
@@ -63,7 +64,8 @@ const email = session.data.user?.email;
   <button type="submit">Publish</button>
 </form>
 
-<script type="module" src="../scripts/sposts.js"></script>
+<script type="module" src="/scripts/sposts.js"></script>
+
 <div id="sposts"></div>
 
 

@@ -1,37 +1,19 @@
-// dashboardAuth.js to hydrate Supabase session from cookies So each user can access their own posts in the dashboard//
-
-import { supabase } from '../../src/lib/supabase'
-
-
-
-
-
-
-// Read tokens from cookies manually//
 async function hydrateSession() {
+  try {
+    const res = await fetch('/api/auth/session')
+    const data = await res.json()
 
-    const cookies = document.cookie
-
-    const accessToken = cookies
-        .split("; ")
-        .find(c => c.startsWith("sb-access-token="))
-        ?.split("=")[1]
-
-    const refreshToken = cookies
-        .split("; ")
-        .find(c => c.startsWith("sb-refresh-token="))
-        ?.split("=")[1]
-
-    if (!accessToken || !refreshToken) {
-        console.warn("No auth cookies found")
-        return
+    if (!data.authenticated) {
+      console.warn('User not authenticated')
+      // Optional redirect:
+      // window.location.href = '/login'
+      return
     }
 
-// Set Supabase auth session//
-    await supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken,
-    })
-    console.log("Supabase session hydrated")
+    console.log('Authenticated user:', data.user)
+  } catch (err) {
+    console.error('Failed to hydrate session', err)
+  }
 }
-hydrateSession()
+
+document.addEventListener('DOMContentLoaded', hydrateSession)
