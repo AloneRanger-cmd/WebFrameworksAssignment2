@@ -1,4 +1,5 @@
-// With `output: 'static'` configured://
+// Standard sign-in API route using Supabase authentication //
+
 export const prerender = false;
 import type { APIRoute } from "astro";
 import { supabase } from "../../../lib/supabase";

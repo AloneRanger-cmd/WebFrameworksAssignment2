@@ -1,3 +1,5 @@
+// Comments API route to handle posting new comments//
+
 import type { APIRoute } from "astro"
 import { createServerClient } from "@supabase/ssr"
 
@@ -6,7 +8,7 @@ export const prerender = false
 export const POST: APIRoute = async ({ request, redirect }) => {
   const accessToken = getAccessTokenFromCookie(request)
 
-  // 🚨 NOT LOGGED IN → REDIRECT
+  // If no access token, redirect to registration user must be logged in//
   if (!accessToken) {
     return redirect(
       "/register?error=" +
@@ -36,7 +38,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     data: { user },
   } = await supabase.auth.getUser(accessToken)
 
-  // 🚨 INVALID USER → REDIRECT
+  // If no access token, redirect to registration user must be logged in - Backup//
   if (!user) {
     return redirect(
       "/register?error=" +

@@ -1,3 +1,5 @@
+// Endpoint to fetch posts and comments for the authenticated user for the dashboard page//
+
 import type { APIRoute } from 'astro'
 import { supabase } from '../../lib/supabase'
 export const prerender = false;
@@ -37,7 +39,7 @@ export const GET: APIRoute = async ({ request }) => {
 
   const user = sessionData.session.user
 
-  // Fetch user's posts
+  // Fetch user's posts//
   const { data: posts, error: postsError } = await supabase
     .from('posts')
     .select('id,title,content,author,date,time')
@@ -50,7 +52,7 @@ export const GET: APIRoute = async ({ request }) => {
     )
   }
 
-  // Fetch comments
+  // Fetch comments//
   const { data: comments, error: commentsError } = await supabase
     .from('comments')
     .select('content, post_id, author')

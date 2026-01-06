@@ -1,3 +1,6 @@
+//JS File for rendering archive page//
+
+// Load archive posts and comments from API//
 async function loadArchive() {
   try {
     const res = await fetch('/api/archive')
@@ -8,7 +11,7 @@ async function loadArchive() {
     const postsContainer = document.getElementById('archive')
     if (!postsContainer) return
 
-    // Render posts
+    // Render posts - Creating separate divs for the content to appear//
     posts.forEach((post, index) => {
       postsContainer.insertAdjacentHTML(
         'beforeend',
@@ -29,7 +32,7 @@ async function loadArchive() {
       )
     })
 
-    // Render comments
+    // Render comments//
     comments.forEach((comment) => {
       const container = document.getElementById(
         `comments-for-${comment.post_id}`
@@ -51,7 +54,7 @@ async function loadArchive() {
   }
 }
 
-// Toggle content
+// Toggle content//
 window.togglePost = function (index) {
   const el = document.getElementById(`postContent-${index}`)
   if (!el) return

@@ -30,6 +30,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     }
   )
 
+  // Parse form data//
   const formData = await request.formData()
 
   const post_id = formData.get("post_id")?.toString()
@@ -40,6 +41,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response("Missing fields", { status: 400 })
   }
 
+  // Update the post//
   const { error } = await supabase
     .from("posts")
     .update({ title, content })

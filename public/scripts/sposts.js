@@ -1,3 +1,6 @@
+// JS File for loading and displaying user's posts and comments on Dashboard Page//
+
+// Load user's posts and comments from API//
 async function loadMyPosts() {
   try {
     const res = await fetch('/api/sposts')
@@ -14,7 +17,7 @@ async function loadMyPosts() {
 
     container.innerHTML = ''
 
-    // Render posts
+    // Render posts by creaating a div for each post//
     posts.forEach((row) => {
       container.insertAdjacentHTML(
         'beforeend',
@@ -44,7 +47,7 @@ async function loadMyPosts() {
       )
     })
 
-    // Render comments
+    // Render comments//
     comments.forEach((comment) => {
       const commentsContainer = document.getElementById(
         `comments-for-${comment.post_id}`

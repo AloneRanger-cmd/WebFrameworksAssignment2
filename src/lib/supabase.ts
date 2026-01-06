@@ -1,3 +1,5 @@
+// Supabase client setup for database and authentication interactions for robust this line also present in most operations //
+
 import { createClient } from "@supabase/supabase-js";
 
 export const supabase = createClient(

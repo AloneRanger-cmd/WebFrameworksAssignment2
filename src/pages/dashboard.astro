@@ -1,4 +1,6 @@
 ---
+// Dashboard page that checks for user authentication and displays user-specific content //
+
 import Layout from "../layouts/baseLayout.astro";
 import { supabase } from "../lib/supabase";
 export const prerender = false;
@@ -39,44 +41,46 @@ const email = session.data.user?.email;
 <Layout title="dashboard">
 <script type="module" src="/scripts/dashboardAuth.js"></script>
 
-
-
   <link rel="stylesheet" href="../../styles/spost.css">
   <h1>Welcome {email}</h1>
   <p>We are happy to see you here</p>
+  
+  <!-- Sign out form -->
   <form action="/api/auth/signout">
     <button type="submit">Sign out</button>
   </form>
+
+  <!-- Form to create a new post -->
   <form method="POST" action="../api/posts/push" class="spost-form">
-  <input
-    type="text"
-    name="title"
-    placeholder="Title"
-    required
-  />
+    <input
+      type="text"
+      name="title"
+      placeholder="Title"
+      required
+    />
 
-  <textarea
-    name="content"
-    placeholder="Write your post..."
-    required
-  ></textarea>
+    <textarea
+      name="content"
+      placeholder="Write your post..."
+      required
+    ></textarea>
 
-  <button type="submit">Publish</button>
-</form>
+    <button type="submit">Publish</button>
+  </form>
 
-<script type="module" src="/scripts/sposts.js"></script>
+  <script type="module" src="/scripts/sposts.js"></script>
 
-<div id="sposts"></div>
+  <div id="sposts"></div>
 
-
-<form
-  method="POST"
-  action="/api/account/delete"
-  onsubmit="return confirm('This will permanently delete your account. Are you sure?')"
->
-  <button type="submit" style="color:red">
-    Delete my account
-  </button>
-</form>
+  <!-- Form to delete account -->
+  <form
+    method="POST"
+    action="/api/account/delete"
+    onsubmit="return confirm('This will permanently delete your account. Are you sure?')"
+  >
+    <button type="submit" style="color:red">
+      Delete my account
+    </button>
+  </form>
 
 </Layout>

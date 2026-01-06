@@ -30,13 +30,15 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     }
   )
 
+  // Parse form data//
   const formData = await request.formData()
   const postId = formData.get("post_id")?.toString()
 
   if (!postId) {
     return new Response("Missing post_id", { status: 400 })
   }
-
+  
+  // Delete the post//
   const { error } = await supabase
     .from("posts")
     .delete()

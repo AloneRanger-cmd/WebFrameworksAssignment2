@@ -1,4 +1,5 @@
-// With `output: 'static'` configured://
+// Standard sign-out API route that clears authentication cookies //
+
 export const prerender = false;
 import type { APIRoute } from "astro";
 

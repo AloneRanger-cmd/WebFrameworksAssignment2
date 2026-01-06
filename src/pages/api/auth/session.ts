@@ -1,3 +1,5 @@
+// Endpoint to check user session and authentication status needed for dashboardAuth.js//
+
 import type { APIRoute } from 'astro'
 import { supabase } from '../../../lib/supabase'
 export const prerender = false;

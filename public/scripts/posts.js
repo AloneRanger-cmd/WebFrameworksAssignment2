@@ -1,3 +1,6 @@
+// JS File for loading and displaying posts and comments on Home Page//
+
+// Load posts and comments from API//
 async function loadPosts() {
   try {
     const res = await fetch('/api/posts')
@@ -8,7 +11,7 @@ async function loadPosts() {
     const postsContainer = document.getElementById('posts')
     if (!postsContainer) return
 
-    // Render posts
+    // Render posts - by creating a div for each post into html//
     posts.forEach((post, index) => {
       postsContainer.insertAdjacentHTML(
         'beforeend',
@@ -35,7 +38,7 @@ async function loadPosts() {
       )
     })
 
-    // Render comments
+    // Render comments//
     comments.forEach((comment) => {
       const container = document.getElementById(
         `comments-for-${comment.post_id}`

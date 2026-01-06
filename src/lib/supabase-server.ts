@@ -1,4 +1,4 @@
-// src/lib/supabase-server.ts
+// Supabase server client setup for handling server-side requests with cookie management for authentication//
 import { createServerClient } from '@supabase/ssr'
 
 export function createSupabaseServerClient(request: Request) {
@@ -23,7 +23,6 @@ export function createSupabaseServerClient(request: Request) {
             })
         },
         setAll() {
-          // Not needed for API routes (no session mutation)
         },
       },
     }

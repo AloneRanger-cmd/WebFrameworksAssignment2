@@ -27,7 +27,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       },
     }
   )
-
+  
+  // Verify the access token and get the user Due to nature of the site this error is just a backup//
   const {
     data: { user },
   } = await supabase.auth.getUser(accessToken)
@@ -45,7 +46,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   if (!title || !content) {
     return new Response('Missing fields', { status: 400 })
   }
-
+  // Insert the new post into the database//
   const { error } = await supabase.from('posts').insert({
     title,
     content,
