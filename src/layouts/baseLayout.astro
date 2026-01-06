@@ -16,20 +16,20 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{title}</title>
+<!-- Supabase Client Setup -->
         <script define:vars={{
-      supabaseUrl,
-      supabaseAnonKey
-    }}>
-      window.PUBLIC_SUPABASE_URL = supabaseUrl;
-      window.PUBLIC_SUPABASE_ANON_KEY = supabaseAnonKey;
-    </script>
+          supabaseUrl,
+          supabaseAnonKey
+        }}>
+          window.PUBLIC_SUPABASE_URL = supabaseUrl;
+          window.PUBLIC_SUPABASE_ANON_KEY = supabaseAnonKey;
+        </script>
   </head>
     </head>
     <body>
-        <Navigation />
+        <Navigation pageTitle={title} />   <!-- 👈 pass it here -->
 <!--Main Area Only Thing That Changes Between Pages -->
 		<main>
-            <h2>{title}</h2>
             <slot />
 		</main>
 <!--End of Main Area -->

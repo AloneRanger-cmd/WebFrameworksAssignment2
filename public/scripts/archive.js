@@ -1,6 +1,6 @@
 //JS File for rendering archive page//
 
-// Load archive posts and comments from API//
+// Load archived posts and comments from API//
 async function loadArchive() {
   try {
     const res = await fetch('/api/archive')
@@ -14,21 +14,25 @@ async function loadArchive() {
     // Render posts - Creating separate divs for the content to appear//
     posts.forEach((post, index) => {
       postsContainer.insertAdjacentHTML(
-        'beforeend',
-        `
-        <div class="post" data-post-id="${post.id}">
-          <h3>${post.title}</h3>
+        'beforeend',`
 
-          <button onclick="togglePost(${index})">Expand</button>
-          <p id="postContent-${index}" style="display:none">
-            ${post.content}
-          </p>
+        <div id="postsContainer" data-post-id="${post.id}">
 
-          <p>By ${post.author} on ${post.date} at ${post.time}</p>
+          <h3 class="postTitle" onclick="togglePost(${index})" style="cursor:pointer">
+            ${post.title}
+          </h3>
 
-          <div class="comments" id="comments-for-${post.id}"></div>
-        </div>
-        `
+          <div id="postContent-${index}" style="display:none">
+            <p class="postContent">
+              ${post.content}
+            </p>
+            <ul>
+              <div class="comments" id="comments-for-${post.id}"></div>
+            </ul>
+          </div>
+
+          <p class="postAuthor">By ${post.author} on ${post.date} at ${post.time}</p>
+        </div>`
       )
     })
 
@@ -40,13 +44,13 @@ async function loadArchive() {
       if (!container) return
 
       container.insertAdjacentHTML(
-        'beforeend',
-        `
-        <div class="comment">
-          <p>${comment.content}</p>
-          <p class="commentAuthor">By ${comment.author}</p>
-        </div>
-        `
+        'beforeend',`
+        <li>
+          <div class="comment">
+            <p>${comment.content}</p>
+            <p class="commentAuthor">By ${comment.author}</p>
+          </div>
+        </li>`
       )
     })
   } catch (err) {
@@ -61,4 +65,5 @@ window.togglePost = function (index) {
   el.style.display = el.style.display === 'none' ? 'block' : 'none'
 }
 
+// Run after DOM is ready//
 document.addEventListener('DOMContentLoaded', loadArchive)

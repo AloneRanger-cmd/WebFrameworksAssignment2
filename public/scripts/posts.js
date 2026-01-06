@@ -14,27 +14,38 @@ async function loadPosts() {
     // Render posts - by creating a div for each post into html//
     posts.forEach((post, index) => {
       postsContainer.insertAdjacentHTML(
-        'beforeend',
-        `
-        <div class="post" data-post-id="${post.id}">
-          <h3>${post.title}</h3>
+        'beforeend',`
 
-          <button onclick="togglePost(${index})">Expand</button>
-          <p id="postContent-${index}" style="display:none">
-            ${post.content}
-          </p>
+        <div id="postsContainer"" data-post-id="${post.id}">
 
-          <p>By ${post.author} on ${post.date} at ${post.time}</p>
+          <h3 class="postTitle" onclick="togglePost(${index})" style="cursor: pointer;">
+            ${post.title}
+          </h3>
 
-          <div class="comments" id="comments-for-${post.id}"></div>
+          <div id="postContent-${index}" style="display:none">
+            <p class="postContent">
+              ${post.content}
+            </p>
+            <p class="postAuthor">By ${post.author} on ${post.date} at ${post.time}</p>
+            <ul>
+              <div class="comments" id="comments-for-${post.id}"></div>
 
-          <form method="POST" action="/api/comments/comments">
-            <input type="hidden" name="post_id" value="${post.id}" />
-            <textarea name="content" required></textarea>
-            <button type="submit">Post comment</button>
-          </form>
-        </div>
-        `
+                <!-- TOGGLE ADD COMMENT FORM BUTTON -->
+                <button onclick="toggleCommentForm(${post.id})">
+                  Add comment
+                </button>
+
+                <!-- ADD COMMENT FORM (collapsible) -->
+                <div id="comment-form-for-${post.id}" style="display:none">
+                  <form method="POST" action="/api/comments/comments">
+                    <input type="hidden" name="post_id" value="${post.id}" />
+                    <textarea name="content" required></textarea>
+                    <button type="submit">Post comment</button>
+                  </form>
+                </div>
+            </ul>
+          </div>
+        </div>`
       )
     })
 
@@ -46,13 +57,14 @@ async function loadPosts() {
       if (!container) return
 
       container.insertAdjacentHTML(
-        'beforeend',
-        `
-        <div class="comment">
-          <p>${comment.content}</p>
-          <p class="commentAuthor">By ${comment.author}</p>
-        </div>
-        `
+        'beforeend',`
+
+        <li>
+          <div class="comment">
+            <p>${comment.content}</p>
+            <p class="commentAuthor">By ${comment.author}</p>
+          </div>
+        </li>`
       )
     })
   } catch (err) {
@@ -60,12 +72,22 @@ async function loadPosts() {
   }
 }
 
-// Toggle post content
+// Toggle post content//
 window.togglePost = function (index) {
   const el = document.getElementById(`postContent-${index}`)
   if (!el) return
   el.style.display = el.style.display === 'none' ? 'block' : 'none'
 }
+window.toggleCommentForm = function (postId) {
+  const formEl = document.getElementById(`comment-form-for-${postId}`)
+  if (!formEl) return
 
-// Run after DOM is ready
+  formEl.style.display =
+    formEl.style.display === 'none' || formEl.style.display === ''
+      ? 'block'
+      : 'none'
+}
+
+
+// Run after DOM is ready//
 document.addEventListener('DOMContentLoaded', loadPosts)

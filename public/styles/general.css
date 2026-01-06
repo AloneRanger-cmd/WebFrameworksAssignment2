@@ -1,4 +1,4 @@
-/*General CSS for Assigment 1*/
+/*General CSS for Assigment 2*/
 body {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
     Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -16,52 +16,65 @@ header {
     padding-bottom : 1rem;
     background-color: #0e1527;
     color: #e7edf3;
-    font-style: italic;
-    text-wrap: nowrap;
-    justify-content: space-between;
-    img {
-        width: 6rem;
-        height: auto;
-        border-radius: 0.2rem;
-        margin-left: auto;
-        border: #0D0A0B 2px solid;
-    }
-    a {
-        text-align: center;
-        text-decoration: none;
-        color: #e7edf3;
-    }
+    
 }
 /*Navigation Area*/
-nav {
+div.navContainer {
+  display: flex;
+  align-items: center;     
+  position: sticky;
+  top: 0;
+  width: 100%;
+  border-bottom: #e7edf3 2px solid;
+  border-top: #e7edf3 2px solid;
+  background-color: white;
+
+  .nav-title {
+    font-size: 1.5rem;
+    color: #0D0A0B;
+    padding-left: 1rem;
+  }
+
+  nav {
+    display: flex;
+    margin-left: auto;     
+  }
+
+  nav ul {
+    display: flex;
+    align-items: center;   
+    list-style: none;
+    margin: 0;
+    padding: .5rem 1rem;
+  }
+
+  nav li {
+    margin-left: 1rem;
+  }
+
+  nav a {
+    color: black;
+    text-decoration: none;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 1rem;
-    border-bottom: #e7edf3 2px solid;
-    border-top: #e7edf3 2px solid;
-    background-color: white;
-    position: sticky;
-    top: 0;
-    width: 100%;
-    a {
-        color: black;
-        text-decoration: none;
-    }
-    a:hover {
-        color: #006E8A;
-    }
-    li {
-        display: inline-block;
-        margin-right: 1rem;
-    }
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover {
+    color: #006E8A;
+  }
 }
+
 /*main area general*/
 main {
     padding : 2rem;
     border-bottom: #0D0A0B 2px solid;
-    background-color: #fafcfe;
+    background-color: #dedede;
     align-items: center;
 }
+
 /*Footer area with griffith logo and student name/number*/
 footer {
     text-align: center;
@@ -84,13 +97,65 @@ div.gclink {
         height: auto;
     }
 }
+/*Buttons General Style*/
+button {
+    background-color: #006E8A;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 0.2rem 0.1rem;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    transition: background-color 0.2s ease;
 
-/*general pictures*/
-div.picture {
-    img {
-        width: 10rem;
-        height: auto;
-        border: #454955 2px solid;
-        margin-right: 2rem;
+    &:hover {
+        background-color: #041e24;
     }
+}
+/*Form General Style*/
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+
+    label {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    input, textarea {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.3rem;
+        font-size: 1rem;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+}
+.deleteForm {
+  display: inline-block;
+}
+
+.deleteForm button {
+  all: unset;                 
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background-color: #c0392b;
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.deleteForm button:hover {
+  background-color: #a93226;
 }

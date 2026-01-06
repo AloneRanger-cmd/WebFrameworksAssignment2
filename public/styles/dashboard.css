@@ -1,16 +1,10 @@
-/*CSS File For Posts Goes Inside Index and Archive pages*/
+/*CSS for dashboard page*/
+
 #postsContainer {
     border-bottom: #666 1px solid;
-    .postAuthor {
+    .postDateTime {
         font-size: 0.9rem;
         color: #666;
-    }
-    .postTitle {
-    cursor: pointer;
-    transition: color 0.2s ease;
-    }
-    .postTitle:hover {
-    color: #006E8A;
     }
     .post {
     padding: 1rem;
@@ -20,4 +14,3 @@
         color: #666;
     }
 }
-

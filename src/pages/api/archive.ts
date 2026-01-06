@@ -21,7 +21,7 @@ export const GET: APIRoute = async () => {
   const { data: comments, error: commentsError } = await supabase
     .from('comments')
     .select('content, post_id, author')
-    .order('created_at', { ascending: true })
+    .order('created_at', { ascending: false })
 
   if (commentsError) {
     return new Response(

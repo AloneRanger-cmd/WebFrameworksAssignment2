@@ -38,16 +38,26 @@ try {
 
 const email = session.data.user?.email;
 ---
-<Layout title="dashboard">
+<Layout title="Dashboard">
 <script type="module" src="/scripts/dashboardAuth.js"></script>
 
-  <link rel="stylesheet" href="../../styles/spost.css">
+  <link rel="stylesheet" href="../../styles/dashboard.css">
   <h1>Welcome {email}</h1>
   <p>We are happy to see you here</p>
   
   <!-- Sign out form -->
   <form action="/api/auth/signout">
     <button type="submit">Sign out</button>
+  </form>
+  <!-- Form to delete account -->
+  <form
+    method="POST"
+    action="/api/account/delete"
+    onsubmit="return confirm('This will permanently delete your account. Are you sure?')"
+  >
+    <button type="submit" style="color:red">
+      Delete my account
+    </button>
   </form>
 
   <!-- Form to create a new post -->
@@ -72,15 +82,6 @@ const email = session.data.user?.email;
 
   <div id="sposts"></div>
 
-  <!-- Form to delete account -->
-  <form
-    method="POST"
-    action="/api/account/delete"
-    onsubmit="return confirm('This will permanently delete your account. Are you sure?')"
-  >
-    <button type="submit" style="color:red">
-      Delete my account
-    </button>
-  </form>
+  
 
 </Layout>

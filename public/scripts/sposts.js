@@ -16,34 +16,57 @@ async function loadMyPosts() {
     if (!container) return
 
     container.innerHTML = ''
+    
+    // Build lookup to see which posts have comments Needed for toggle comments button//
+    const postsWithComments = {}
+
+    comments.forEach((comment) => {
+      postsWithComments[comment.post_id] = true
+    })
+
 
     // Render posts by creaating a div for each post//
     posts.forEach((row) => {
       container.insertAdjacentHTML(
-        'beforeend',
-        `
-        <div class="post">
+        'beforeend',`
+
+        <div id="postsContainer">
           <h3 class="postTitle">${row.title}</h3>
           <p class="postContent">${row.content}</p>
-          <p class="postDate-Time">${row.date} at ${row.time}</p>
+          <p class="postDateTime">${row.date} at ${row.time}</p>
 
-          <div class="comments" id="comments-for-${row.id}"></div>
+          <!-- TOGGLE COMMENTS BUTTON IF COMMENTS EXIST -->
+          ${
+            postsWithComments[row.id]
+              ? `<button onclick="toggleComments(${row.id})">Toggle comments</button>`
+              : ''
+          }
 
+          <ul>
+            <div class="comments" id="comments-for-${row.id}" style="display:none"></div>
+          </ul>
+          
           <!-- DELETE -->
-          <form method="POST" action="/api/posts/delete">
-            <input type="hidden" name="post_id" value="${row.id}" />
-            <button type="submit">Delete post</button>
-          </form>
+          <div class="deleteForm">
+            <form method="POST" action="/api/posts/delete">
+              <input type="hidden" name="post_id" value="${row.id}" />
+              <button type="submit">Delete post</button>
+            </form>
+          </div>
 
-          <!-- EDIT -->
-          <form method="POST" action="/api/posts/edit">
-            <input type="hidden" name="post_id" value="${row.id}" />
-            <input type="text" name="title" value="${row.title}" required />
-            <textarea name="content" required>${row.content}</textarea>
-            <button type="submit">Save changes</button>
-          </form>
-        </div>
-        `
+          <!-- EDIT TOGGLE BUTTON -->
+          <button onclick="toggleEdit(${row.id})">Edit post</button>
+
+          <!-- EDIT (collapsible) -->
+          <div id="edit-for-${row.id}" style="display:none">
+            <form method="POST" action="/api/posts/edit">
+              <input type="hidden" name="post_id" value="${row.id}" />
+              <input type="text" name="title" value="${row.title}" required />
+              <textarea name="content" required>${row.content}</textarea>
+              <button type="submit">Save changes</button>
+            </form>
+          </div>
+        </div>`
       )
     })
 
@@ -56,18 +79,39 @@ async function loadMyPosts() {
       if (!commentsContainer) return
 
       commentsContainer.insertAdjacentHTML(
-        'beforeend',
-        `
-        <div class="comment">
-          <p>${comment.content}</p>
-          <p class="commentAuthor">By ${comment.author}</p>
-        </div>
-        `
+        'beforeend',`
+        <li>
+          <div class="comment">
+            <p>${comment.content}</p>
+            <p class="commentAuthor">By ${comment.author}</p>
+          </div>
+        </li>`
       )
     })
   } catch (err) {
     console.error('Failed to load dashboard posts', err)
   }
 }
+window.toggleComments = function (postId) {
+  const commentsEl = document.getElementById(`comments-for-${postId}`)
+  if (!commentsEl) return
 
+  commentsEl.style.display =
+    commentsEl.style.display === 'none' || commentsEl.style.display === ''
+      ? 'block'
+      : 'none'
+}
+
+window.toggleEdit = function (postId) {
+  const editEl = document.getElementById(`edit-for-${postId}`)
+  if (!editEl) return
+
+  editEl.style.display =
+    editEl.style.display === 'none' || editEl.style.display === ''
+      ? 'block'
+      : 'none'
+}
+
+
+// Run after DOM is ready//
 document.addEventListener('DOMContentLoaded', loadMyPosts)
