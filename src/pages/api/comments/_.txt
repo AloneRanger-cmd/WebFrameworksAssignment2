@@ -1,4 +1,0 @@
-<form method="POST" action="/api/comments/delete">
-  <input type="hidden" name="comment_id" value="${row.id}" />
-  <button type="submit">Delete</button>
-</form>

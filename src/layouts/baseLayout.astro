@@ -9,10 +9,8 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 ---
 <html>
     <link rel="stylesheet" href="../../styles/general.css">
-    
-
+  
     <head>
-        <Header title={title}/>
         <meta lang="en">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +26,8 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
   </head>
     </head>
     <body>
-        <Navigation pageTitle={title} />   <!-- 👈 pass it here -->
+      <Header title={title}/>
+      <Navigation pageTitle={title} />
 <!--Main Area Only Thing That Changes Between Pages -->
 		<main>
             <slot />
