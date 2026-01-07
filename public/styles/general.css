@@ -16,8 +16,49 @@ header {
     padding-bottom : 1rem;
     background-color: #0e1527;
     color: #e7edf3;
-    
+
+    div.headerTitle {
+        margin-left: 0;
+    }
+    /*Navigation inside header*/
+    div.navContainerHeader {
+        display: flex;
+        align-items: center;
+        margin-left: auto;  
+
+        nav {
+            display: flex;
+                
+        }
+
+        nav ul {
+        display: flex;
+        align-items: center;   
+        list-style: none;
+
+        padding: .5rem 1rem;
+        }
+
+        nav li {
+            margin-left: 1rem;
+        }
+
+        nav a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #006E8A;
+        }
+    }
 }
+
 /*Navigation Area*/
 div.navContainer {
   display: flex;
@@ -120,8 +161,9 @@ button {
 form {
     display: flex;
     flex-direction: column;
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 37.5rem;
+    margin-left: 0;
+    margin-right: auto;
 
     label {
         margin-top: 1rem;
@@ -138,24 +180,6 @@ form {
 
     textarea {
         resize: vertical;
-        min-height: 100px;
+        min-height: 6.25rem;
     }
-}
-.deleteForm {
-  display: inline-block;
-}
-
-.deleteForm button {
-  all: unset;                 
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  background-color: #c0392b;
-  color: white;
-  border-radius: 4px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.deleteForm button:hover {
-  background-color: #a93226;
 }

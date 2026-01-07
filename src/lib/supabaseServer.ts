@@ -22,7 +22,15 @@ export function createSupabaseServerClient(request: Request) {
               }
             })
         },
-        setAll() {
+
+        // ✅ PASTE IT HERE (replaces the empty function)
+        setAll(cookies) {
+          cookies.forEach(({ name, value }) => {
+            request.headers.append(
+              'Set-Cookie',
+              `${name}=${encodeURIComponent(value)}`
+            )
+          })
         },
       },
     }

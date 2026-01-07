@@ -1,5 +1,6 @@
 /*CSS for dashboard page*/
 
+/*Dashboard Posts*/
 #postsContainer {
     border-bottom: #666 1px solid;
     .postDateTime {
@@ -13,4 +14,27 @@
     .commentAuthor {
         color: #666;
     }
+}
+/*Account Form*/
+.accountForm {
+    max-width: 14rem;
+    align-items: left;
+}
+.deleteForm {
+  display: inline-block;
+}
+
+.deleteForm button {
+  all: unset;                 
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background-color: #c0392b;
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.deleteForm button:hover {
+  background-color: #a93226;
 }

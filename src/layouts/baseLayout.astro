@@ -1,17 +1,24 @@
 ---
+export const prerender = false;
 import Navigation from "../components/navigation.astro";
 import Header from "../components/header.astro";
 import Footer from "../components/footer.astro";
+import { createSupabaseServerClient } from "../lib/supabaseServer"
+const supabase = createSupabaseServerClient(Astro.request);
+
 const { title } = Astro.props;
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+const {
+  data: { user }
+} = await supabase.auth.getUser()
 ---
 <html>
     <link rel="stylesheet" href="../../styles/general.css">
     
 
     <head>
-        <Header title={title}/>
+
         <meta lang="en">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +34,8 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
   </head>
     </head>
     <body>
-        <Navigation pageTitle={title} />   <!-- 👈 pass it here -->
+        <Header title={title} user={user} />
+        <Navigation pageTitle={title} />
 <!--Main Area Only Thing That Changes Between Pages -->
 		<main>
             <slot />

@@ -27,7 +27,7 @@ async function loadArchive() {
               ${post.content}
             </p>
             <ul>
-              <div class="comments" id="comments-for-${post.id}"></div>
+              <div class="comments" id="commentFor-${post.id}"></div>
             </ul>
           </div>
 
@@ -39,7 +39,7 @@ async function loadArchive() {
     // Render comments//
     comments.forEach((comment) => {
       const container = document.getElementById(
-        `comments-for-${comment.post_id}`
+        `commentFor-${comment.post_id}`
       )
       if (!container) return
 

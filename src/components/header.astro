@@ -1,5 +1,28 @@
+---
+const { user } = Astro.props
+export const prerender = false;
+---
 <header>
-    <div class="personal">
-        <h2>Welcome To My Blog Post Site </h2>
-    </div>
+  <div class="headerTitle">
+    <h2>Welcome To My Blog Post Site</h2>
+  </div>
+
+  <div class="navContainerHeader">
+    <nav>
+      <ul>
+        {!user && (
+          <>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/signin">Sign In</a></li>
+          </>
+        )}
+
+        {user && (
+            <>
+
+            </>
+        )}
+      </ul>
+    </nav>
+  </div>
 </header>

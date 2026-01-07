@@ -40,48 +40,59 @@ const email = session.data.user?.email;
 ---
 <Layout title="Dashboard">
 <script type="module" src="/scripts/dashboardAuth.js"></script>
+<script type="module" src="/scripts/dashboard.js"></script>
 
   <link rel="stylesheet" href="../../styles/dashboard.css">
   <h1>Welcome {email}</h1>
   <p>We are happy to see you here</p>
-  
+  <p>Here you can manage your account and create new posts, look for the comments under your posts and delete them.<br>
+  And if you really want you can even delete your account with all of your posts and comments go with you.</p>
+
+  <!-- Account actions (collapsible) JS is in sposts.js -->
+  <button onclick="toggleAccountActions()">Account actions</button>
+  <button onclick="togglePublishForm()">Create new post</button>
+
+  <div id="accountActions" style="display:none">
+
   <!-- Sign out form -->
-  <form action="/api/auth/signout">
-    <button type="submit">Sign out</button>
-  </form>
+    <form class="accountForm"
+    action="/api/auth/signout">
+      <button type="submit">Sign out</button>
+    </form>
+
   <!-- Form to delete account -->
-  <form
-    method="POST"
-    action="/api/account/delete"
-    onsubmit="return confirm('This will permanently delete your account. Are you sure?')"
-  >
-    <button type="submit" style="color:red">
-      Delete my account
-    </button>
-  </form>
+    <form class="accountForm"
+      method="POST"
+      action="/api/account/delete"
+      onsubmit="return confirm('This will permanently delete your account. Are you sure?')"
+    >
+      <button type="submit" style="color:red">
+        Delete my account
+      </button>
+    </form>
+  </div>
 
-  <!-- Form to create a new post -->
-  <form method="POST" action="../api/posts/push" class="spost-form">
-    <input
-      type="text"
-      name="title"
-      placeholder="Title"
-      required
-    />
+  <!-- Form to create a new post (collapsible) -->
+  <div id="publishForm" style="display:none">
+    <form method="POST" action="../api/posts/push" class="spost-form">
+      <input
+        type="text"
+        name="title"
+        placeholder="Title"
+        required
+      />
 
-    <textarea
-      name="content"
-      placeholder="Write your post..."
-      required
-    ></textarea>
+      <textarea
+        name="content"
+        placeholder="Write your post..."
+        required
+      ></textarea>
 
-    <button type="submit">Publish</button>
-  </form>
+      <button type="submit">Publish</button>
+    </form>
+  </div>
 
-  <script type="module" src="/scripts/sposts.js"></script>
-
+  <!-- Section to display user's posts -->
   <div id="sposts"></div>
-
-  
 
 </Layout>

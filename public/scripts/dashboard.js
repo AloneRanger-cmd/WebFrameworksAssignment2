@@ -3,7 +3,7 @@
 // Load user's posts and comments from API//
 async function loadMyPosts() {
   try {
-    const res = await fetch('/api/sposts')
+    const res = await fetch('/api/dashboard')
 
     if (!res.ok) {
       console.warn('Not authenticated or failed to load posts')
@@ -43,7 +43,7 @@ async function loadMyPosts() {
           }
 
           <ul>
-            <div class="comments" id="comments-for-${row.id}" style="display:none"></div>
+            <div class="comments" id="commentsFor-${row.id}" style="display:none"></div>
           </ul>
           
           <!-- DELETE -->
@@ -54,11 +54,10 @@ async function loadMyPosts() {
             </form>
           </div>
 
-          <!-- EDIT TOGGLE BUTTON -->
+          <!-- EDIT (collapsible) -->
           <button onclick="toggleEdit(${row.id})">Edit post</button>
 
-          <!-- EDIT (collapsible) -->
-          <div id="edit-for-${row.id}" style="display:none">
+          <div id="editFor-${row.id}" style="display:none">
             <form method="POST" action="/api/posts/edit">
               <input type="hidden" name="post_id" value="${row.id}" />
               <input type="text" name="title" value="${row.title}" required />
@@ -73,7 +72,7 @@ async function loadMyPosts() {
     // Render comments//
     comments.forEach((comment) => {
       const commentsContainer = document.getElementById(
-        `comments-for-${comment.post_id}`
+        `commentsFor-${comment.post_id}`
       )
 
       if (!commentsContainer) return
@@ -92,8 +91,11 @@ async function loadMyPosts() {
     console.error('Failed to load dashboard posts', err)
   }
 }
+// Toggle Functions//
+
+// Toggle comments//
 window.toggleComments = function (postId) {
-  const commentsEl = document.getElementById(`comments-for-${postId}`)
+  const commentsEl = document.getElementById(`commentsFor-${postId}`)
   if (!commentsEl) return
 
   commentsEl.style.display =
@@ -102,8 +104,9 @@ window.toggleComments = function (postId) {
       : 'none'
 }
 
+// Toggle edit form//
 window.toggleEdit = function (postId) {
-  const editEl = document.getElementById(`edit-for-${postId}`)
+  const editEl = document.getElementById(`editFor-${postId}`)
   if (!editEl) return
 
   editEl.style.display =
@@ -111,6 +114,29 @@ window.toggleEdit = function (postId) {
       ? 'block'
       : 'none'
 }
+
+// Toggle Function for post content//
+window.togglePublishForm = function () {
+  const form = document.getElementById('publishForm')
+  if (!form) return
+
+  form.style.display =
+    form.style.display === 'none' || form.style.display === ''
+      ? 'block'
+      : 'none'
+}
+
+// Toggle Function for Account Actions//
+window.toggleAccountActions = function () {
+  const el = document.getElementById('accountActions')
+  if (!el) return
+
+  el.style.display =
+    el.style.display === 'none' || el.style.display === ''
+      ? 'block'
+      : 'none'
+}
+
 
 
 // Run after DOM is ready//

@@ -28,15 +28,14 @@ async function loadPosts() {
             </p>
             <p class="postAuthor">By ${post.author} on ${post.date} at ${post.time}</p>
             <ul>
-              <div class="comments" id="comments-for-${post.id}"></div>
+              <div class="comments" id="commentsFor-${post.id}"></div>
 
-                <!-- TOGGLE ADD COMMENT FORM BUTTON -->
+                <!-- ADD COMMENT FORM (collapsible) -->
                 <button onclick="toggleCommentForm(${post.id})">
                   Add comment
                 </button>
 
-                <!-- ADD COMMENT FORM (collapsible) -->
-                <div id="comment-form-for-${post.id}" style="display:none">
+                <div id="commentFormFor-${post.id}" style="display:none">
                   <form method="POST" action="/api/comments/comments">
                     <input type="hidden" name="post_id" value="${post.id}" />
                     <textarea name="content" required></textarea>
@@ -52,7 +51,7 @@ async function loadPosts() {
     // Render comments//
     comments.forEach((comment) => {
       const container = document.getElementById(
-        `comments-for-${comment.post_id}`
+        `commentsFor-${comment.post_id}`
       )
       if (!container) return
 
@@ -78,8 +77,9 @@ window.togglePost = function (index) {
   if (!el) return
   el.style.display = el.style.display === 'none' ? 'block' : 'none'
 }
+// Toggle comment form//
 window.toggleCommentForm = function (postId) {
-  const formEl = document.getElementById(`comment-form-for-${postId}`)
+  const formEl = document.getElementById(`commentFormFor-${postId}`)
   if (!formEl) return
 
   formEl.style.display =
