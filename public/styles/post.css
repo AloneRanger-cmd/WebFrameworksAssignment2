@@ -1,16 +1,11 @@
 /*CSS File For Posts Goes Inside Index and Archive pages*/
 #postsContainer {
-    border-bottom: #666 1px solid;
+    border: #666 1px solid;
+    margin-bottom: 0.1rem;
+    padding: 0.3rem;
     .postAuthor {
         font-size: 0.9rem;
         color: #666;
-    }
-    .postTitle {
-    cursor: pointer;
-    transition: color 0.2s ease;
-    }
-    .postTitle:hover {
-    color: #006E8A;
     }
     .post {
     padding: 1rem;
@@ -19,5 +14,14 @@
     .commentAuthor {
         color: #666;
     }
+}
+.postHeader {
+  display: flex;
+  align-items: center;
+}
+
+.togglePostBtn {
+  margin-left: auto;
+  cursor: pointer;
 }
 

@@ -18,9 +18,11 @@ async function loadArchive() {
 
         <div id="postsContainer" data-post-id="${post.id}">
 
-          <h3 class="postTitle" onclick="togglePost(${index})" style="cursor:pointer">
-            ${post.title}
-          </h3>
+          <div class="postHeader">
+            <h3 class="postTitle">${post.title}</h3>
+
+            <button class="togglePostBtn" onclick="togglePost(${index})" type="button">Expand</button>
+          </div>
 
           <div id="postContent-${index}" style="display:none">
             <p class="postContent">
